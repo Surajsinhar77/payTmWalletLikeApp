@@ -1,12 +1,11 @@
-import userModel from "../model/user.model";
+import usermodel from "../model/user.model";
 import { Request, Response } from "express";
 import bcrypt from 'bcrypt';
 import mongoose from 'mongoose';
 import { getAuthToken } from "../service/getAuthToken";
 
 // model excution to get model 
-const model = userModel();
-
+const model = usermodel();
 
 export async function userRegister (req:Request, res: Response){
     try{

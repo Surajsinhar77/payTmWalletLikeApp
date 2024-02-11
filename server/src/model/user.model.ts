@@ -21,6 +21,12 @@ const userScheme = new mongoose.Schema({
     password : {
         type : String,
         required : true,
+    },
+
+    accountId : {
+        type: mongoose.Schema.Types.ObjectId,
+        ref : "accountmodel",
+        required : true,
     }
 })
 
@@ -29,9 +35,11 @@ interface users extends Document{
     firstname : string,
     lastname : string,
     password : string,
+    accountId : mongoose.Schema.Types.ObjectId
 }
 
 export default function userModel(){
     // here we are not use new for mongoose.model 
-    return mongoose.model<users>('users', userScheme);
+    const usermodel = mongoose.model<users>('users', userScheme);
+    return usermodel;
 }
