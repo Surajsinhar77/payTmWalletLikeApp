@@ -1,11 +1,10 @@
-import usermodel from "../model/user.model";
+import {usermodel} from "../model/user.model";
+import  {accountmodel}  from "../model/account.model";
 import { Request, Response } from "express";
 import bcrypt from 'bcrypt';
 import mongoose from 'mongoose';
 import { getAuthToken } from "../service/getAuthToken";
 
-// model excution to get model 
-const model = usermodel();
 
 export async function userRegister (req:Request, res: Response){
     try{
@@ -15,7 +14,7 @@ export async function userRegister (req:Request, res: Response){
         const lastname : string =  req.body.lastname; // this should throw error
         const password : string =  req.body.password;
 
-        const userExist = await model.findOne({username : username});
+        const userExist = await usermodel.findOne({username : username});
 
         if(userExist){
             return res.status(409).json({
@@ -30,12 +29,20 @@ export async function userRegister (req:Request, res: Response){
         const hashpassword = await bcrypt.hash(password, salt);
         // how the salt and saltRoundes work and why we need that 
 
-        const userData = await model.create({
+        
+
+        const userData = await usermodel.create({
             username : username,
             firstname : firstname,
             lastname : lastname,
             password : hashpassword,
         })
+
+        await accountmodel.create({
+            userId : userData._id,
+            balance : 1+Math.random()*1000
+        })
+
         const token = getAuthToken(userData._id);
         // await userData.save(); // we don't need to do this with model.create function 
         return res.status(200).json({message : "user is sucessfull created", userData : userData, accessToken : token});
@@ -50,7 +57,7 @@ export async function userLogin(req:Request, res:Response){
         const username : string =  req.body.username;
         const password : string =  req.body.password;
 
-        const userExist = await model.findOne({username: username}); // this should be await 
+        const userExist = await usermodel.findOne({username: username}); // this should be await 
         if(!userExist){
             return res.status(404).json({message :"User does'nt Exist", error: "user not found"});
         }
@@ -78,7 +85,7 @@ export async function updateUserInfo(req:Request, res:Response){
         const newPassword  : string = req.body.password; // Need to work on this to update password 
         const userId = new mongoose.Types.ObjectId(String(req.query.id));
 
-        const userExist = await model.findOne({_id: userId});
+        const userExist = await usermodel.findOne({_id: userId});
         if(!userExist){
             return res.json({message:"User is not exist ", error : "You are not allow to update"});
         }
@@ -98,10 +105,10 @@ export async function updateUserInfo(req:Request, res:Response){
         if(newPassForHash && matchPassword){
             const hashpassword = await bcrypt.hash(newPassForHash, 10);
             const newUpdateData = {...updateData, password: hashpassword};
-            const updateUser = await model.updateOne({_id : userId}, newUpdateData);
+            const updateUser = await usermodel.updateOne({_id : userId}, newUpdateData);
             return res.status(200).json({message:"Data is Update sucessfull", updateinfo: updateUser})
         }else{
-            const updateUser = await model.updateOne({_id : userId}, updateData);
+            const updateUser = await usermodel.updateOne({_id : userId}, updateData);
             return res.status(200).json({message:"Data is Update sucessfull", updateinfo: updateUser})
         }
         
