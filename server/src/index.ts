@@ -5,6 +5,8 @@ import userAuthRoute  from './routes/user.auth.route';
 import userAccountRoute from './routes/account.router';
 import cors from 'cors';
 
+// custom middleware 
+import {authMiddleware} from './middleware/authMiddleware'
 
 // database connectivity 
 connectToDatabase(process.env.MongoDbUrl? process.env.MongoDbUrl : "undefine data"); 
@@ -18,8 +20,7 @@ app.use(cors());
 
 
 app.use('/user/auth', userAuthRoute); 
-app.use('/account', userAccountRoute);
-
+app.use('/account', authMiddleware ,userAccountRoute);
 
 
 app.listen(5000, ()=>{

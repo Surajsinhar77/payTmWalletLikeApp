@@ -1,9 +1,9 @@
 import { Router } from "express";
-import { getBalance } from "../controller/account.controller";
-import { authMiddleware } from "../middleware/authMiddleware";
+import { getBalance,amountTransfer } from "../controller/account.controller";
 
 const router = Router();
 
-router.get('/balance', authMiddleware, getBalance);
+router.get('/balance', getBalance);
+router.post('/transfer', amountTransfer);
 
 export default router; 

@@ -15,7 +15,7 @@ export async function authMiddleware(req:Request, res:Response, next:NextFunctio
                     return res.json({message :err});
                 }
                 const id = Object(decord); // have to convert this to object 
-                req.query.id = id.id;
+                req.query.id = id.userId;
             }
         ) 
         next();
