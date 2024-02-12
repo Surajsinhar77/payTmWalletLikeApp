@@ -17,10 +17,10 @@ export async function getBalance(req:Request, res:Response){
 
 export async function amountTransfer(req: Request, res: Response){
     const session = await mongoose.startSession();
-
     const amount : number  = req.body.amount;
     const to = new mongoose.Types.ObjectId(String(req.body.to));
     const userId = req.query.id;
+
     try{
         session.startTransaction(); // Start transaction
 
@@ -40,7 +40,7 @@ export async function amountTransfer(req: Request, res: Response){
         await accountmodel.updateOne(
             {userId: fromUserAccount?.userId}, // condition
             {
-                $inc:{ balance : -amount }
+                $inc: { balance : -amount }
             }
         ).session(session);
 
