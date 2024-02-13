@@ -8,11 +8,48 @@ import {
     CardTitle,
 } from "@/components/ui/card";
 import { Link } from "react-router-dom";
-
+import api from "@/common/api/userBaseAxios";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { ToastAction } from "@/components/ui/toast"
+import { useToast } from "@/components/ui/use-toast"
 
 export function Signup() {
+    const {toast} = useToast();
+    
+    async function userSignup(){
+        try{
+            const username  = document.querySelector('#email_id')?.value;
+            const firstName  = document.querySelector('#fname')?.value;
+            const lastName  = document.querySelector('#lname')?.value;
+            const password  = document.querySelector('#userPassword')?.value;
+
+            const response = await api.post("/user/auth/signup", {
+                username,
+                firstname : firstName,
+                lastname : lastName,
+                password
+            });
+            console.log("response from th signup page : ",response);
+            toast({
+                    title: response.data.message,
+                    description: "Now you can login with yours username and password",
+                action: (
+                    <ToastAction altText = "Goto schedule to undo">Undo</ToastAction>
+                ),
+            })
+        }catch(err){
+            console.log("This error is from singup page : ",err);
+            toast({
+                title: "Error on the signup ",
+                description: "Now you can login with yours username and password",
+            action: (
+                <ToastAction altText="Goto schedule to undo">Undo</ToastAction>
+            ),
+        })
+        }
+    }
+
     return (
         <Card className="w-[350px] m-auto">
         <CardHeader className="flex flex-col items-center gap-3">
@@ -20,7 +57,7 @@ export function Signup() {
             <CardDescription className="text-md text-slate-50">Enter yours infomation to create an account.</CardDescription>
         </CardHeader>
         <CardContent>
-            <form>
+            {/* <form> */}
             <div className="grid w-full items-center gap-4">
                 <div className="flex flex-col space-y-1.5">
                     <Label htmlFor="name">First Name</Label>
@@ -43,10 +80,10 @@ export function Signup() {
                 </div>
 
                 <div className="flex flex-col space-y-1.5">
-                    <Button className="text-base font-semibold">SignUp</Button>
+                    <Button onClick={userSignup} className="text-base font-semibold">SignUp</Button>
                 </div>
             </div>
-            </form>
+            {/* </form> */}
         </CardContent>
         <CardFooter className="gap-2">
             <p>Already have an account </p> <Link to="/signin" className="underline font-lg"> Login </Link>

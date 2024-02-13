@@ -15,8 +15,9 @@ dotenv.config();
 const app = express();
 
 // global middelware
-app.use(express.json()); // body parser
 app.use(cors());
+app.use(express.json()); // body parser
+
 
 
 app.use('/user/auth', userAuthRoute); 
