@@ -11,12 +11,25 @@ import { Link } from "react-router-dom";
 import api from "@/common/api/userBaseAxios";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { ToastAction } from "@/components/ui/toast"
-import { useToast } from "@/components/ui/use-toast"
+import { ToastAction } from "@/components/ui/toast";
+import { useToast } from "@/components/ui/use-toast";
+// import { loginUser } from '../../../common/Store/authStore';
+// import { useRecoilValue, useRecoilState } from "recoil";
+
+// interface userdata{
+//     message : string,
+//     accessToken: string,
+//     user : {}
+// }
 
 export function Signup() {
-    const {toast} = useToast();
+    // const userData =  useRecoilValue(loginUser);
+    // const [userdata, setUserData] = useRecoilState<userdata | null>( loginUser );
     
+    // console.log("this is printing here ", userData);
+
+    const {toast} = useToast();
+
     async function userSignup(){
         try{
             const username  = document.querySelector('#email_id')?.value;
@@ -30,7 +43,10 @@ export function Signup() {
                 lastname : lastName,
                 password
             });
+
             console.log("response from th signup page : ",response);
+            // setUserData(response)
+
             toast({
                     title: response.data.message,
                     description: "Now you can login with yours username and password",

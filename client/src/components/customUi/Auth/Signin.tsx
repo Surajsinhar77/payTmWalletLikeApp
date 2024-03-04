@@ -13,9 +13,21 @@ import { Label } from "@/components/ui/label";
 
 import api from '../../../common/api/userBaseAxios';
 import { useToast } from "@/components/ui/use-toast";
+import {loginUser} from '../../../common/Store/authStore'
+import { useRecoilValue, useRecoilState, useSetRecoilState } from "recoil";
+
+
+interface userdata{
+    message : string,
+    accessToken: string,
+    user : object
+}
 
 export function Signin(){
     const {toast} = useToast();
+    // const [userdata, setUserData] = useRecoilState<userdata | null>(loginUser);
+    const userData = useRecoilValue<userdata | null>(loginUser);
+    const setUserData = useSetRecoilState<userdata | null>(loginUser);
 
     async function getIt(){
         const email =  document.querySelector('#email_id')?.value;
@@ -23,7 +35,8 @@ export function Signin(){
 
         try{
             console.log("here iam using api call ", email, password);
-            const response = await api.post('/user/auth/signin', {username:email, password:password})
+            const response = await api.post('/user/auth/signin', {username:email, password:password});
+            console.log("This is the resposne form the signIn ", response.data);
             toast({
                 title: response.data.message,
                 description: "If u dont have an account create one ",
@@ -31,6 +44,9 @@ export function Signin(){
                     <Link to="/signup">Signup</Link>
                 ),
             })
+            console.log("This is the resposne form the signIn ", response.data);
+            setUserData(response.data)
+            console.log("This is from the user Data ",userData);
         }
         catch(err){
             console.log(err);
