@@ -13,8 +13,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ToastAction } from "@/components/ui/toast";
 import { useToast } from "@/components/ui/use-toast";
-// import { loginUser } from '../../../common/Store/authStore';
-// import { useRecoilValue, useRecoilState } from "recoil";
+import { loginUser } from '../../../common/Store/authStore';
+import { useRecoilValue, useRecoilState } from "recoil";
 
 // interface userdata{
 //     message : string,
@@ -23,10 +23,8 @@ import { useToast } from "@/components/ui/use-toast";
 // }
 
 export function Signup() {
-    // const userData =  useRecoilValue(loginUser);
-    // const [userdata, setUserData] = useRecoilState<userdata | null>( loginUser );
-    
-    // console.log("this is printing here ", userData);
+    const userData =  useRecoilValue(loginUser);
+    console.log("This is printing here ", userData);
 
     const {toast} = useToast();
 

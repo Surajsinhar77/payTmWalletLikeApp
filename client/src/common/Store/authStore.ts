@@ -8,5 +8,12 @@ interface userdata{
 
 export const loginUser = atom <userdata | null>({
   key: "loginUser",
-  default: null,
+  default: JSON.parse(localStorage.getItem('loginUser')),
 });
+
+
+
+export const coutingData = atom<number>({
+  key : "contingData",
+  default : 0,
+})

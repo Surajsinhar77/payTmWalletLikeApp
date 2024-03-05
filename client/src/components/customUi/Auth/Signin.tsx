@@ -13,8 +13,10 @@ import { Label } from "@/components/ui/label";
 
 import api from '../../../common/api/userBaseAxios';
 import { useToast } from "@/components/ui/use-toast";
-import {loginUser} from '../../../common/Store/authStore'
-import { useRecoilValue, useRecoilState, useSetRecoilState } from "recoil";
+import {loginUser } from '../../../common/Store/authStore'
+import { useRecoilState } from "recoil";
+import { useNavigate } from "react-router-dom";
+// import { loginUser_LocalStorage_data } from './LocalStorageAuth/loginLocalData';
 
 
 interface userdata{
@@ -25,18 +27,19 @@ interface userdata{
 
 export function Signin(){
     const {toast} = useToast();
-    // const [userdata, setUserData] = useRecoilState<userdata | null>(loginUser);
-    const userData = useRecoilValue<userdata | null>(loginUser);
-    const setUserData = useSetRecoilState<userdata | null>(loginUser);
+    const [userdata, setUserData] = useRecoilState< userdata | null >(loginUser);
+    const navigate = useNavigate();
+
 
     async function getIt(){
         const email =  document.querySelector('#email_id')?.value;
         const password =  document.querySelector('#userPassword')?.value;
 
         try{
-            console.log("here iam using api call ", email, password);
-            const response = await api.post('/user/auth/signin', {username:email, password:password});
-            console.log("This is the resposne form the signIn ", response.data);
+            const response = await api.post('/user/auth/signin', {username : email, password });
+            setUserData(response.data);
+            console.log(userdata);
+            localStorage.setItem('loginUser', JSON.stringify(response.data));
             toast({
                 title: response.data.message,
                 description: "If u dont have an account create one ",
@@ -44,11 +47,8 @@ export function Signin(){
                     <Link to="/signup">Signup</Link>
                 ),
             })
-            console.log("This is the resposne form the signIn ", response.data);
-            setUserData(response.data)
-            console.log("This is from the user Data ",userData);
-        }
-        catch(err){
+            navigate('/dashboard');
+        }catch(err){
             console.log(err);
             toast({
                 title: "error while signin",
@@ -59,7 +59,8 @@ export function Signin(){
             })
         }
     }
-    
+
+
     return (
         <Card className="w-[350px] m-auto">
         <CardHeader className="flex flex-col items-center gap-3">
