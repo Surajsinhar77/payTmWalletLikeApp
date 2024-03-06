@@ -13,7 +13,6 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 
 function UserBar({item}: any) {
-
     return (
         <div className="user flex justify-between py-2 items-center text-md">
             <div className="flex gap-3">
