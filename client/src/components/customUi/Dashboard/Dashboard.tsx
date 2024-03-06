@@ -1,4 +1,3 @@
-import UserBar from "./UserBar";
 import { useRecoilValue, useRecoilState } from "recoil";
 import { loginUser, usersData } from "@/common/Store/authStore";
 import { DropdownMenuDemo } from "@/components/customUi/Dashboard/DropdownMenu";
@@ -17,8 +16,6 @@ function Dashboard() {
             console.log(err)
         })
     },[]);
-
-    console.log("This is the users Array  ",users);
 
     return (
         <div className="w-[85%] text-md">
@@ -43,7 +40,7 @@ function Dashboard() {
                 </div>
 
                 <Search/>
-                
+
             </div>
         </div>
     )

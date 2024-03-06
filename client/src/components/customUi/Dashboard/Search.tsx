@@ -11,6 +11,7 @@ interface users{
     password : string
 }
 
+// Have to remove the current user from the users data 
 export default function Search() {
     const [search, setSearch] = useRecoilState<string>(searchdata);
     const users  = useRecoilValue<any>(usersData);
@@ -18,10 +19,7 @@ export default function Search() {
     
     
     function searchingUser(value:string){
-        
         setSearch(value);
-        console.log("Checking user data is present or not ",users.usersdata);
-
         setFilterData( users.usersdata.filter((user : users) => user.username.toLowerCase().includes(search.toLowerCase())))
     }
 
