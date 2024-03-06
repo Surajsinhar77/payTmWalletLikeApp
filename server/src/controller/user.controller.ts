@@ -4,11 +4,12 @@ import { Request, Response } from "express";
 import bcrypt from 'bcrypt';
 import mongoose from 'mongoose';
 import { getAuthToken } from "../service/getAuthToken";
+import { Types } from 'mongoose';
 
 
 export async function userRegister (req:Request, res: Response){
     try{
-        console.log(typeof(req.body.lastname)); // geting number here 
+        // geting number here 
         const username : string =  req.body.username;
         const firstname : string =  req.body.firstname;
         const lastname : string =  req.body.lastname; // this should throw error
@@ -38,11 +39,13 @@ export async function userRegister (req:Request, res: Response){
             password : hashpassword,
         })
 
-        await accountmodel.create({
+        const accountData = await accountmodel.create({
             userId : userData._id,
             balance : 1+Math.random()*1000
         })
-
+        
+        console.log("This is the Account Data : ",accountData);
+        
         const token = getAuthToken(userData._id);
         // await userData.save(); // we don't need to do this with model.create function 
         return res.status(200).json({message : "user is sucessfull created", userData : userData, accessToken : token});
@@ -64,8 +67,11 @@ export async function userLogin(req:Request, res:Response){
 
         const passwordMatch = await bcrypt.compare(password, userExist.password);
         if(passwordMatch){
+            const userObjectId = new mongoose.Types.ObjectId(userExist.id);
+            console.log("user Object id : ", userObjectId._id);
+            const userAccountData = await accountmodel.findOne({userId: userObjectId});
             const token = getAuthToken(userExist._id);
-            return res.status(200).json({message:"User is sucessfull login", user : userExist , accessToken : token});
+            return res.status(200).json({message:"User is sucessfull login", user : userExist , accessToken : token, accountData : userAccountData});
         }else{
             return res.status(403).json({message:"Incorrect password" ,error:"Invalid cridential"})
         }

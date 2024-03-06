@@ -42,9 +42,6 @@ export function Signup() {
                 password
             });
 
-            console.log("response from th signup page : ",response);
-            // setUserData(response)
-
             toast({
                     title: response.data.message,
                     description: "Now you can login with yours username and password",

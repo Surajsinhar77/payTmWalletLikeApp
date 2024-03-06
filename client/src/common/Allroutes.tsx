@@ -7,8 +7,6 @@ import { useRecoilValue } from 'recoil';
 
 function Allroutes(){
     const userData = useRecoilValue(loginUser);
-    console.log("This is from the all router page to here :",userData);
-    
     return (
         <Routes>
 

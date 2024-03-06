@@ -3,7 +3,8 @@ import {atom} from 'recoil';
 interface userdata{
   message : string,
   accessToken: string,
-  user : object
+  user : object,
+  accountData : object
 }
 
 export const loginUser = atom <userdata | null>({

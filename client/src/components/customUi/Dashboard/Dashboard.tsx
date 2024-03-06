@@ -1,9 +1,9 @@
-import  AvatarDemo  from "@/components/customUi/Avater/Avater";
 import UserBar from "./UserBar";
 import { Input } from "@/components/ui/input"
 import { useRecoilValue } from "recoil";
 import { loginUser } from "@/common/Store/authStore";
-import { DropdownMenuDemo } from "@/components/customUi/Dashboard/DropdownMenu"
+import { DropdownMenuDemo } from "@/components/customUi/Dashboard/DropdownMenu";
+
 
 interface AvatarProps {
     Btn: React.ComponentType<any>; // Type for the button component
@@ -32,7 +32,7 @@ function Dashboard() {
 
             <div className="innerContainer">
                 <div className="balanceContainer py-5">
-                    <h1 className="text-2xl font-bold">Yours, Balance &nbsp; <span className="text-green-500"> ${"5000.00"}</span></h1>
+                    <h1 className="text-2xl font-bold">Yours, Balance &nbsp; <span className="text-green-500"> ${userData?.accountData?.balance}</span></h1>
                 </div>
 
                 <div className="user py-5">

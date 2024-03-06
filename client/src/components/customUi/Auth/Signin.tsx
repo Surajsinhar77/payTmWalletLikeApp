@@ -22,7 +22,8 @@ import { useNavigate } from "react-router-dom";
 interface userdata{
     message : string,
     accessToken: string,
-    user : object
+    user : object,
+    accountData : object
 }
 
 export function Signin(){
@@ -38,7 +39,6 @@ export function Signin(){
         try{
             const response = await api.post('/user/auth/signin', {username : email, password });
             setUserData(response.data);
-            console.log(userdata);
             localStorage.setItem('loginUser', JSON.stringify(response.data));
             toast({
                 title: response.data.message,
