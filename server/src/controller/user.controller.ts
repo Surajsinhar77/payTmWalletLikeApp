@@ -44,11 +44,10 @@ export async function userRegister (req:Request, res: Response){
             balance : 1+Math.random()*1000
         })
         
-        console.log("This is the Account Data : ",accountData);
         
         const token = getAuthToken(userData._id);
         // await userData.save(); // we don't need to do this with model.create function 
-        return res.status(200).json({message : "user is sucessfull created", userData : userData, accessToken : token});
+        return res.status(200).json({message : "Welcome, User is sucessfull created", user : userData, accessToken : token, accountData : accountData});
     }catch(err){
         console.error(err);
     }

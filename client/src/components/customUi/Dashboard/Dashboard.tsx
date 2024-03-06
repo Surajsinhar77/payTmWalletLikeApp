@@ -11,8 +11,6 @@ interface AvatarProps {
 
 function Dashboard() {
     const userData = useRecoilValue(loginUser);
-
-    console.log("This is from the dashboard here ", userData);
     
     return (
         <div className="w-[85%] text-md">

@@ -14,16 +14,20 @@ import { Label } from "@/components/ui/label";
 import { ToastAction } from "@/components/ui/toast";
 import { useToast } from "@/components/ui/use-toast";
 import { loginUser } from '../../../common/Store/authStore';
-import { useRecoilValue, useRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
+import { useNavigate } from "react-router-dom";
 
-// interface userdata{
-//     message : string,
-//     accessToken: string,
-//     user : {}
-// }
+
+interface userdata{
+    message : string,
+    accessToken: string,
+    user : object,
+    accountData : object
+}
 
 export function Signup() {
-    const userData =  useRecoilValue(loginUser);
+    const navigate = useNavigate();
+    const [userData, setUserData] =  useRecoilState<userdata | null>(loginUser);
     console.log("This is printing here ", userData);
 
     const {toast} = useToast();
@@ -42,6 +46,11 @@ export function Signup() {
                 password
             });
 
+            // saving data in the recoil state  and localStore
+            setUserData(response.data);
+            localStorage.setItem('loginUser', JSON.stringify(response.data));
+            //
+
             toast({
                     title: response.data.message,
                     description: "Now you can login with yours username and password",
@@ -49,6 +58,7 @@ export function Signup() {
                     <ToastAction altText = "Goto schedule to undo">Undo</ToastAction>
                 ),
             })
+            navigate("/dashboard");
         }catch(err){
             console.log("This error is from singup page : ",err);
             toast({
