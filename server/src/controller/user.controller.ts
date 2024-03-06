@@ -1,6 +1,6 @@
 import {usermodel} from "../model/user.model";
 import  {accountmodel}  from "../model/account.model";
-import { Request, Response } from "express";
+import { Request, Response, response } from "express";
 import bcrypt from 'bcrypt';
 import mongoose from 'mongoose';
 import { getAuthToken } from "../service/getAuthToken";
@@ -66,8 +66,7 @@ export async function userLogin(req:Request, res:Response){
 
         const passwordMatch = await bcrypt.compare(password, userExist.password);
         if(passwordMatch){
-            const userObjectId = new mongoose.Types.ObjectId(userExist.id);
-            console.log("user Object id : ", userObjectId._id);
+            const userObjectId = new mongoose.Types.ObjectId(String(userExist.id));
             const userAccountData = await accountmodel.findOne({userId: userObjectId});
             const token = getAuthToken(userExist._id);
             return res.status(200).json({message:"User is sucessfull login", user : userExist , accessToken : token, accountData : userAccountData});
@@ -119,5 +118,15 @@ export async function updateUserInfo(req:Request, res:Response){
         
     }catch(err:any){
         return res.json({message: err.message});
+    }
+}
+
+// just a get api to get all user data from the database 
+export async function getAllUsers(req:Request, res:Response){
+    try{
+        const usersdata = await usermodel.find({});
+        return res.status(200).json({message: "All user data", usersdata : usersdata});
+    }catch(err){
+        return res.json({message: (err as Error)?.message});
     }
 }
