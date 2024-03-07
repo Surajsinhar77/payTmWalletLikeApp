@@ -3,7 +3,7 @@ const secretKey : string = process.env.SecretKey ? process.env.SecretKey : "fals
 
 export function getAuthToken(id:number){
     try{
-        return jwt.sign({id: id}, secretKey);
+        return jwt.sign({userId: id}, secretKey);
     }catch(err){
         console.error("the console error is err: ", err);
         return false;

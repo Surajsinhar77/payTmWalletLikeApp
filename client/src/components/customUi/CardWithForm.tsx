@@ -1,3 +1,4 @@
+// import * as React from "react";
 import { Button } from "@/components/ui/button";
 import {
     Card,
@@ -46,12 +47,27 @@ export function CardWithForm() {
                     </Select>
                     </div>
                 </div>
-                </form>
-            </CardContent>
-            <CardFooter className="flex justify-between">
-                <Button variant="outline">Cancel</Button>
-                <Button variant="outline">Deploy</Button>
-            </CardFooter>
+                <div className="flex flex-col space-y-1.5">
+                <Label htmlFor="framework">Framework</Label>
+                <Select>
+                    <SelectTrigger id="framework">
+                    <SelectValue placeholder="Select" />
+                    </SelectTrigger>
+                    <SelectContent position="popper">
+                    <SelectItem value="next">Next.js</SelectItem>
+                    <SelectItem value="sveltekit">SvelteKit</SelectItem>
+                    <SelectItem value="astro">Astro</SelectItem>
+                    <SelectItem value="nuxt">Nuxt.js</SelectItem>
+                    </SelectContent>
+                </Select>
+                </div>
+            </div>
+            </form>
+        </CardContent>
+        <CardFooter className="flex justify-between">
+            <Button variant="outline">Cancel</Button>
+            <Button >Deploy</Button>
+        </CardFooter>
         </Card>
     );
 }
