@@ -35,3 +35,8 @@ export const coutingData = atom<number>({
   key : "contingData",
   default : 0,
 });
+
+export const accountBalance = atom<number>({
+  key : "accountBalance",
+  default : 0,
+})

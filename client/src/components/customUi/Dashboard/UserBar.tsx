@@ -9,10 +9,14 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { useState } from "react";
+import { SureAlert } from "./SureAlert";
 
 function UserBar({item}: any) {
+    const [money, setMoney] = useState<number>(0);
+
     return (
         <div className="user flex justify-between py-2 items-center text-md">
             <div className="flex gap-3">
@@ -37,14 +41,20 @@ function UserBar({item}: any) {
                     </DialogDescription>
                     </DialogHeader>
                     <div className="flex py-4 gap-3 text-md items-center">
-                        <AvatarDemo/> <span> Friend </span>
+                        <AvatarDemo/> <span> Friend - {item.firstname}</span>
                     </div>
                     <div className="flex flex-col py-4 gap-3 text-md">
                         <Label htmlFor="Amount">Amount : </Label>
-                        <Input id="sendAmount" className="col-span-3" placeholder="$100" />
+                        <Input 
+                            id="sendAmount" 
+                            className="col-span-3" 
+                            placeholder="$100" 
+                            onChange={(e)=>setMoney(parseFloat(e.target.value))} />
                     </div>
                     <div className="flex flex-col space-y-1.5">
-                        <Button  className="text-base font-semibold bg-green-600 text-white hover:bg-green-700 hover:text-white">Send</Button>
+
+                        <SureAlert money={money}  id ={item._id}/>
+                    
                     </div>
                     <DialogFooter>
 

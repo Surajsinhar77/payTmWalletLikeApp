@@ -16,7 +16,9 @@ import { useToast } from "@/components/ui/use-toast";
 import { loginUser } from '../../../common/Store/authStore';
 import { useRecoilState } from "recoil";
 import { useNavigate } from "react-router-dom";
-
+import { useState } from "react";
+import { Loader2 } from "lucide-react";
+import { ButtonLoading } from "../Dashboard/SureAlert";
 
 interface userdata{
     message : string,
@@ -28,7 +30,7 @@ interface userdata{
 export function Signup() {
     const navigate = useNavigate();
     const [userData, setUserData] =  useRecoilState<userdata | null>(loginUser);
-    console.log("This is printing here ", userData);
+    const [loading, setLoading] = useState(false);
 
     const {toast} = useToast();
 
@@ -101,7 +103,12 @@ export function Signup() {
                 </div>
 
                 <div className="flex flex-col space-y-1.5">
-                    <Button onClick={userSignup} className="text-base font-semibold">SignUp</Button>
+                {
+                    loading?
+                        <ButtonLoading/>
+                    :
+                        <Button onClick={userSignup} className="text-base font-semibold">SignUp</Button>
+                }
                 </div>
             </div>
             {/* </form> */}

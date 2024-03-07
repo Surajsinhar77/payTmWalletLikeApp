@@ -16,6 +16,9 @@ import { useToast } from "@/components/ui/use-toast";
 import {loginUser } from '../../../common/Store/authStore'
 import { useRecoilState } from "recoil";
 import { useNavigate } from "react-router-dom";
+import { Loader2 } from "lucide-react";
+import { ButtonLoading } from "../Dashboard/SureAlert";
+import { useState } from "react";
 // import { loginUser_LocalStorage_data } from './LocalStorageAuth/loginLocalData';
 
 
@@ -30,7 +33,7 @@ export function Signin(){
     const {toast} = useToast();
     const [userdata, setUserData] = useRecoilState< userdata | null >(loginUser);
     const navigate = useNavigate();
-
+    const [loading, setLoading] = useState(false);
 
     async function getIt(){
         const email =  document.querySelector('#email_id')?.value;
@@ -83,7 +86,12 @@ export function Signin(){
 
                 
                 <div className="flex flex-col space-y-1.5">
-                    <Button className="text-base font-semibold" id='loginbtn' onClick={getIt}>Login</Button>
+                    {
+                        loading?
+                            <ButtonLoading/>
+                        :
+                            <Button className="text-base font-semibold" id='loginbtn' onClick={getIt}>Login</Button>
+                    }
                 </div>
             </div>
             {/* </form> */}
