@@ -19,7 +19,6 @@ app.use(cors());
 app.use(express.json()); // body parser
 
 
-
 app.use('/user/auth', userAuthRoute); 
 app.use('/account', authMiddleware ,userAccountRoute);
 
