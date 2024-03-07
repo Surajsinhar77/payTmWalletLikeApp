@@ -20,7 +20,6 @@ function Dashboard() {
 
     useEffect(()=>{
         api.get('/account/balance').then((response)=>{
-            console.log("This is the response for balance : ",response.data)
             setBalance(response.data.balance);
         }).catch((err)=>{
             console.log(err)
