@@ -35,7 +35,7 @@ function Dashboard() {
                     <span className="text-red-500 text-xl font-semibold">Hello, &nbsp; 
                         { ((userData?.user as { firstname: string }).firstname).toUpperCase() }
                     </span>
-                    <DropdownMenuDemo avater={onclick}/>
+                    <DropdownMenuDemo />
                 </div>
             </div>
             <hr />

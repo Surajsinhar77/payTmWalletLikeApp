@@ -40,7 +40,7 @@ import { loginUser } from "@/common/Store/authStore";
 // End Recoil Function
 
 
-export function DropdownMenuDemo({click}:any) {
+export function DropdownMenuDemo() {
     const navigate = useNavigate(); 
     const setUserState = useSetRecoilState(loginUser);
 
