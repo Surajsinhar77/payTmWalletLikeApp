@@ -58,7 +58,7 @@ export async function userLogin(req:Request, res:Response){
     try{
         const username : string =  req.body.username;
         const password : string =  req.body.password;
-
+        console.log("username and password from the login user backend ",username, password)
         const userExist = await usermodel.findOne({username: username}); // this should be await 
         if(!userExist){
             return res.status(404).json({message :"User does'nt Exist", error: "user not found"});

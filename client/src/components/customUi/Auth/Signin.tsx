@@ -19,6 +19,7 @@ import { useNavigate } from "react-router-dom";
 import { Loader2 } from "lucide-react";
 import { ButtonLoading } from "../Dashboard/SureAlert";
 import { useState } from "react";
+import { error } from "console";
 // import { loginUser_LocalStorage_data } from './LocalStorageAuth/loginLocalData';
 
 
@@ -41,16 +42,19 @@ export function Signin(){
 
         try{
             const response = await api.post('/user/auth/signin', {username : email, password });
-            setUserData(response.data);
-            localStorage.setItem('loginUser', JSON.stringify(response.data));
-            toast({
-                title: response.data.message,
-                description: "If u dont have an account create one ",
-                action: (
-                    <Link to="/signup">Signup</Link>
-                ),
-            })
-            navigate('/dashboard');
+            if(response.status == 200){
+                setUserData(response.data);
+                localStorage.setItem('loginUser', JSON.stringify(response.data));
+                toast({
+                    title: response.data.message,
+                    description: "If u dont have an account create one ",
+                    action: (
+                        <Link to="/signup">Signup</Link>
+                    ),
+                })
+                navigate('/dashboard');
+            }
+            
         }catch(err){
             console.log(err);
             toast({
@@ -97,7 +101,7 @@ export function Signin(){
             {/* </form> */}
         </CardContent>
         <CardFooter className="gap-2">
-            <p>Create an account </p> <Link to="/signup" className="underline font-lg"> SignUp </Link>
+            <p>Create an account </p> <Link to="/" className="underline font-lg"> SignUp </Link>
         </CardFooter>
         </Card>
     );
