@@ -4,8 +4,7 @@ import { Request, Response, response } from "express";
 import bcrypt from 'bcrypt';
 import mongoose from 'mongoose';
 import { getAuthToken } from "../service/getAuthToken";
-import { Types } from 'mongoose';
-
+// import { Types } from 'mongoose';
 
 export async function userRegister (req:Request, res: Response){
     try{
@@ -29,8 +28,6 @@ export async function userRegister (req:Request, res: Response){
         const salt = await bcrypt.genSalt(saltRounds);
         const hashpassword = await bcrypt.hash(password, salt);
         // how the salt and saltRoundes work and why we need that 
-
-        
 
         const userData = await usermodel.create({
             username : username,
